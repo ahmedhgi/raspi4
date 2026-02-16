@@ -1,0 +1,8 @@
+#!/bin/bash
+while true; do
+a=`cat /sys/bus/w1/devices/28-00000a54f0d1/w1_slave |grep t= | sed 's/.*t=\([0-9]\{1,3\}\)\([0-9]\{3\}\)/\1.\2/'`
+rrdupdate /home/platz4/temperature1.rrd N:$a
+echo $a
+sleep 5
+
+done
