@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+filename = "/home/platz4/temperature1.rrd"
+import rrdtool
+ret = rrdtool.graph(	'-' ,
+   			'--imgformat', 'PNG' ,
+			'--width',' 640' ,
+			'--height','300' ,
+			'--start','-1hour' ,
+			'--end', 'now' ,
+			'--vertical-label', "Grad Celsuis" ,
+			'--alt-autoscale' ,
+			'--title', 'Temperatur (Vergleich)' ,
+			'DEF:temp1=/home/platz4/temperature1.rrd:temp1:AVERAGE',
+             		'LINE1:temp1#0000FF:Temperatur DS18B20' ,
+             		'GPRINT:temp1:MIN:Min\\:  %3.2lf °C' ,
+             		'GPRINT:temp1:MAX:Max\\: %3.2lf °C ' ,
+             		'GPRINT:temp1:AVERAGE: Avg\\: %3.2lf °C' ,
+             		'GPRINT:temp1:LAST: Aktuell\\: %3.2lf °C',
+                        'DEF:temp2=/home/platz4/raspi4/02.03./pressure1.rrd:temperature:AVERAGE' ,
+                        'AREA:temp2#FA4B4B:' ,
+			'AREA:temp1#70A9FF:',
+                        'LINE1:temp2#FF0000:Temperatur BMP280' ,
+                        'GPRINT:temp2:MIN:Min\\:  %3.2lf °C' ,
+                        'GPRINT:temp2:MAX:Max\\: %3.2lf °C ' ,
+                        'GPRINT:temp2:AVERAGE: Avg\\: %3.2lf °C' ,
+                        'GPRINT:temp2:LAST: Aktuell\\: %3.2lf °C')
